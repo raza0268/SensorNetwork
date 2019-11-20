@@ -90,15 +90,14 @@ class Sensor_network extends CI_Model
 
         $query = $this->db->get();
         $data=$query->result();
-
+       $arr=array(array('user_id' => $data[0]->user_id));
 
         if ($this->db->affected_rows() == 1)
         {
-            echo $data[0]->user_id;
+            echo json_encode($arr);
         } else
         {
-
-        echo 'Failure';
+           echo 'Failure';
         }
        
     }
