@@ -70,7 +70,7 @@ class Sensor_network extends CI_Model
         $this->db->where('password', $response['password']);
         $query = $this->db->get();
         $data=$query->result();
-       $arr=array(array('user_id' => $data[0]->user_id));
+        $arr=array(array('user_id' => $data[0]->user_id));
         if ($this->db->affected_rows() == 1)
         {
             echo json_encode($arr);

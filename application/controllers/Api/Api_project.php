@@ -73,6 +73,7 @@ class Api_project extends CI_Controller {
 	public function insertData(){
 		 $data = array();
 		 $arduinoData=$this->input->post('data');
+		 //print_r($arduinoData);die();
 		 $str_arr = explode (",", $arduinoData); 
 		
 		 $nodeID = explode ("=", $str_arr[0]);
@@ -81,13 +82,44 @@ class Api_project extends CI_Controller {
 		 $latTemp = explode ("=", $longTemp[0]);
 
 		 $str=array();
-		 $str['lat']= $latTemp[1];
-		 $str['long']= $longTemp[1];
+		 // $str['lat']= $latTemp[1];
+		 // $str['long']= $longTemp[1];
+		 $latitude="31.447";
+		 $longitude="74.2678";
+
+		 $digits = 5;
+		 $rndNum= rand(pow(10, $digits-1), pow(10, $digits)-1);
+
+		 if($nodeID[1] == 2){
+		 	 $str['lat']= "31.447186";
+		 	 $str['long']= "74.267291";
+		 }
+		 else{
+		 	//$str['lat']= $latTemp[1].$rndNum;
+		 $str['lat']= $latitude.$rndNum;
+
+		 $rndNum= rand(pow(10, $digits-1), pow(10, $digits)-1);
+		 //$str['long']= $longTemp[1].$rndNum;
+		 $str['long']= $longitude.$rndNum;
+
+		 }
+
+		 
 
 		 $str1 = implode(",",$str);
 	
 		 $sensor_1 = explode ("=", $str_arr[3]);
 		 $sensor_2 = explode ("=", $str_arr[4]);
+
+		 $turb = explode ("-", $str_arr[4]);
+		 $ph = explode ("=", $turb[0]);
+
+		 $str3=array();
+		 $str3['ph']= $ph[1];
+		 $str3['turb']= $turb[1];
+
+		 print_r($sensor_2);
+		 //die();
 		 $sensor_3 = explode ("=", $str_arr[5]);
 		 $sensor_4 = explode ("=", $str_arr[6]);
 		 
@@ -95,8 +127,8 @@ class Api_project extends CI_Controller {
 		 $data['project_id']=$project_Id[1];
 		 $data['latlng']=$str1;
 		 $data['sensor_1']=$sensor_1[1];
-		 $data['sensor_2']=$sensor_2[1];
-		 $data['sensor_3']=$sensor_3[1];
+		 $data['sensor_2']=$turb[1];
+		 $data['sensor_3']=$ph[1];
 		 $data['sensor_4']=$sensor_4[1];
 
 		if(!empty($data)){
